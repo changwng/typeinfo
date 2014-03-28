@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" default="all" basedir=".">
+
+    <property name="jdk.dir" value="C:\Java\jdk1.6"/>
+    <property name="dir.src-gen" value="${basedir}/src-gen"/>
+    <property name="path.to.xsd" value="${basedir}/src/beans.xsd"/>
+
+    <target name="all" depends=""/>
+
+    <dirname property="module.typeinfo.basedir" file="${ant.file}"/>
+    <property name="typeinfo.output.dir" value="${module.typeinfo.basedir}/out/production/typeinfo"/>
+
+    <path id="typeinfo.module.production.classpath">
+        <path refid="library.spring_3.0.0.classpath"/>
+        <path refid="library.unnamed.classpath"/>
+    </path>
+
+
+    <!-- Project Libraries -->
+
+    <path id="library.spring_3.0.0.classpath">
+        <pathelement location="${basedir}/lib/commons-logging.jar"/>
+        <pathelement location="${basedir}/lib/spring-asm.jar"/>
+        <pathelement location="${basedir}/lib/spring-beans.jar"/>
+        <pathelement location="${basedir}/lib/spring-context.jar"/>
+        <pathelement location="${basedir}/lib/spring-core.jar"/>
+        <pathelement location="${basedir}/lib/spring-expression.jar"/>
+        <pathelement location="${basedir}/lib/spring-tx.jar"/>
+    </path>
+
+    <path id="library.unnamed.classpath">
+        <pathelement location="/lib/aspectjrt.jar"/>
+        <pathelement location="/lib/certjFIPS.jar"/>
+        <pathelement location="/lib/dfc.jar"/>
+        <pathelement location="/lib/log4j.jar"/>
+    </path>
+
+
+    <path id="typeinfo.module.sourcepath">
+        <dirset dir="${module.typeinfo.basedir}">
+            <include name="src"/>
+            <include name="src-gen"/>
+        </dirset>
+    </path>
+
+    <target name="generate.beans" depends="clean.src-gen"
+            description="Generate beans java classes from xsd schema with xjc (jaxb)">
+        <exec executable="${jdk.dir}/bin/xjc.exe">
+            <arg value="-d"/>
+            <arg value="${dir.src-gen}"/>
+            <arg value="-p"/>
+            <arg value="com.googlecode.dtools.typeinfo.beans"/>
+            <arg value="${path.to.xsd}"/>
+        </exec>
+    </target>
+
+    <target name="xslt">
+        <delete dir="D:\temp\typeinfo_wiki"/>
+        <xslt basedir="D:\temp\typeinfo" destdir="D:\temp\typeinfo_wiki"
+       extension=".txt" style="D:\projects\dtools\typeinfo\xslt\dokuwiki.xsl">
+
+       </xslt>
+    </target>
+
+    <target name="clean.src-gen">
+        <delete>
+            <fileset dir="${dir.src-gen}">
+                <filename name="**/*"/>
+            </fileset>
+        </delete>
+        <!--<delete dir="${src-gen.dir}"/>-->
+        <!--<mkdir dir="${src-gen.dir}"/>-->
+    </target>
+
+
+    <target name="clean" description="cleanup all">
+        <delete dir="${typeinfo.output.dir}"/>
+    </target>
+
+
+    <target name="compile" description="Compile module typeinfo; production classes">
+        <mkdir dir="${typeinfo.output.dir}"/>
+        <javac destdir="${typeinfo.output.dir}" target="1.5" fork="true">
+            <classpath refid="typeinfo.module.production.classpath"/>
+            <src refid="typeinfo.module.sourcepath"/>
+        </javac>
+    </target>
+
+
+    <target name="artifact.typeinfo.jar" depends="init.artifacts, compile"
+            description="Build &apos;typeinfo&apos; artifact">
+        <property name="artifact.temp.output.typeinfo" value="${artifacts.temp.dir}/typeinfo"/>
+        <mkdir dir="${artifact.temp.output.typeinfo}"/>
+        <jar destfile="${temp.jar.path.typeinfo.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+            <zipfileset file="${basedir}/src/META-INF/spring.schemas" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/spring.tooling" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/spring.handlers" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/readme_about_spring" prefix="META-INF"/>
+            <zipfileset dir="${typeinfo.output.dir}"/>
+            <zipfileset src="${basedir}/lib/commons-logging.jar"/>
+            <zipfileset src="${basedir}/lib/spring-asm.jar"/>
+            <zipfileset src="${basedir}/lib/spring-beans.jar"/>
+            <zipfileset src="${basedir}/lib/spring-context.jar"/>
+            <zipfileset src="${basedir}/lib/spring-core.jar"/>
+            <zipfileset src="${basedir}/lib/spring-expression.jar"/>
+            <zipfileset src="${basedir}/lib/spring-tx.jar"/>
+
+            <zipfileset src="/lib/aspectjrt.jar"/>
+            <zipfileset src="/lib/certjFIPS.jar"/>
+            <zipfileset src="/lib/dfc.jar"/>
+            <zipfileset src="/lib/jaxb-api.jar"/>
+            <zipfileset src="/lib/jaxb-impl.jar"/>
+            <zipfileset src="/lib/jsafeFIPS.jar"/>
+            <zipfileset src="/lib/log4j.jar"/>
+
+
+            <manifest>
+                <attribute name="Main-Class" value="com.googlecode.dtools.typeinfo.Main"/>
+                <!--<attribute name="Implementation-Version" value="${this.version}"/>-->
+                <!--<attribute name="Built-By" value="${user.name}"/>-->
+                <!--<section name="SVN INFO">-->
+                <!--<attribute name="svn-url" value="${svn.url}"/>-->
+                <!--<attribute name="svn-revision" value="${svn.rev}"/>-->
+                <!--<attribute name="svn-author" value="${svn.author}"/>-->
+                <!--<attribute name="svn-commited-date" value="${svn.lastDate}"/>-->
+                <!--</section>-->
+            </manifest>
+        </jar>
+        <copy file="${temp.jar.path.typeinfo.jar}" tofile="${artifact.temp.output.typeinfo}/typeinfo.jar"/>
+    </target>
+
+
+    <target name="init.artifacts">
+        <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+        <property name="artifact.output.dist" value="${basedir}/out/artifacts/dist"/>
+        <property name="artifact.output.typeinfo" value="${basedir}/out/artifacts/typeinfo"/>
+        <mkdir dir="${artifacts.temp.dir}"/>
+        <property name="temp.jar.path.typeinfo.zip" value="${artifacts.temp.dir}/typeinfo.zip"/>
+        <property name="temp.jar.path.typeinfo.jar" value="${artifacts.temp.dir}/typeinfo.jar"/>
+    </target>
+
+
+</project>

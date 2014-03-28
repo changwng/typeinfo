@@ -1,0 +1,278 @@
+wb.size() = COPYCODE
+wb.size() = COPYCODE
+wb.size() = COPYCODE
+$A$2 -  row:1 cell:0 - 테이블명세서
+$B$2 -  row:1 cell:1 - 
+$C$2 -  row:1 cell:2 - 프로젝트명
+$D$2 -  row:1 cell:3 -  Documentum 프로젝트
+$E$2 -  row:1 cell:4 - 
+$F$2 -  row:1 cell:5 - 시스템명
+$G$2 -  row:1 cell:6 -  
+$H$2 -  row:1 cell:7 - 
+$I$2 -  row:1 cell:8 - 
+$J$2 -  row:1 cell:9 - 문서번호
+$K$2 -  row:1 cell:10 - 
+$A$3 -  row:2 cell:0 - 
+$B$3 -  row:2 cell:1 - 
+$C$3 -  row:2 cell:2 - 단   계   명
+$D$3 -  row:2 cell:3 - 구축단계
+$E$3 -  row:2 cell:4 - 
+$F$3 -  row:2 cell:5 - 작성일자
+$G$3 -  row:2 cell:6 - Mon Mar 08 00:00:00 KST 2010
+$H$3 -  row:2 cell:7 - 작성자
+$I$3 -  row:2 cell:8 - 장웅
+$J$3 -  row:2 cell:9 - 버      전
+$K$3 -  row:2 cell:10 - 
+$A$4 -  row:3 cell:0 - 
+$B$4 -  row:3 cell:1 - 
+$C$4 -  row:3 cell:2 - 작   업   명
+$D$4 -  row:3 cell:3 - TYPE 설계
+$E$4 -  row:3 cell:4 - 
+$F$4 -  row:3 cell:5 - 승인일자
+$G$4 -  row:3 cell:6 - 
+$H$4 -  row:3 cell:7 - 승인자
+$I$4 -  row:3 cell:8 - 
+$J$4 -  row:3 cell:9 - PAGE
+$K$4 -  row:3 cell:10 - 
+$A$6 -  row:5 cell:0 - 타  입   명
+$B$6 -  row:5 cell:1 - 
+$C$6 -  row:5 cell:2 - ADMINBBS
+$D$6 -  row:5 cell:3 - 
+$E$6 -  row:5 cell:4 - 
+$F$6 -  row:5 cell:5 - 테 이 블 명
+$G$6 -  row:5 cell:6 - 
+$H$6 -  row:5 cell:7 - 
+$I$6 -  row:5 cell:8 - 
+$J$6 -  row:5 cell:9 - 
+$K$6 -  row:5 cell:10 - 
+$A$7 -  row:6 cell:0 - 타 입 설 명
+$B$7 -  row:6 cell:1 - 
+$C$7 -  row:6 cell:2 - 
+$D$7 -  row:6 cell:3 - 
+$E$7 -  row:6 cell:4 - 
+$F$7 -  row:6 cell:5 - 
+$G$7 -  row:6 cell:6 - 
+$H$7 -  row:6 cell:7 - 
+$I$7 -  row:6 cell:8 - 
+$J$7 -  row:6 cell:9 - 
+$K$7 -  row:6 cell:10 - 
+$A$8 -  row:7 cell:0 - 비        고 
+$B$8 -  row:7 cell:1 - 
+$C$8 -  row:7 cell:2 - 
+$D$8 -  row:7 cell:3 - 
+$E$8 -  row:7 cell:4 - 
+$F$8 -  row:7 cell:5 - 
+$G$8 -  row:7 cell:6 - 
+$H$8 -  row:7 cell:7 - 
+$I$8 -  row:7 cell:8 - 
+$J$8 -  row:7 cell:9 - 
+$K$8 -  row:7 cell:10 - 
+$A$10 -  row:9 cell:0 - 순 서
+$B$10 -  row:9 cell:1 - 컬   럼   명
+$C$10 -  row:9 cell:2 - 
+$D$10 -  row:9 cell:3 - 컬럼 ID
+$E$10 -  row:9 cell:4 - 데이터형
+$F$10 -  row:9 cell:5 - 길이
+$G$10 -  row:9 cell:6 - 널허용
+$H$10 -  row:9 cell:7 - P K
+$I$10 -  row:9 cell:8 - 비           고
+$J$10 -  row:9 cell:9 - 
+$K$10 -  row:9 cell:10 - 
+$A$11 -  row:10 cell:0 - 1.0
+$B$11 -  row:10 cell:1 - 
+$C$11 -  row:10 cell:2 - 
+$D$11 -  row:10 cell:3 - 
+$E$11 -  row:10 cell:4 - 
+$F$11 -  row:10 cell:5 - 
+$G$11 -  row:10 cell:6 - 
+$H$11 -  row:10 cell:7 - 
+$I$11 -  row:10 cell:8 - 
+$J$11 -  row:10 cell:9 - 
+$K$11 -  row:10 cell:10 - 
+$A$12 -  row:11 cell:0 - 2.0
+$B$12 -  row:11 cell:1 - 
+$C$12 -  row:11 cell:2 - 
+$D$12 -  row:11 cell:3 - 
+$E$12 -  row:11 cell:4 - 
+$F$12 -  row:11 cell:5 - 
+$G$12 -  row:11 cell:6 - 
+$H$12 -  row:11 cell:7 - 
+$I$12 -  row:11 cell:8 - 
+$J$12 -  row:11 cell:9 - 
+$K$12 -  row:11 cell:10 - 
+$A$13 -  row:12 cell:0 - 3.0
+$B$13 -  row:12 cell:1 - 
+$C$13 -  row:12 cell:2 - 
+$D$13 -  row:12 cell:3 - 
+$E$13 -  row:12 cell:4 - 
+$F$13 -  row:12 cell:5 - 
+$G$13 -  row:12 cell:6 - 
+$H$13 -  row:12 cell:7 - 
+$I$13 -  row:12 cell:8 - 
+$J$13 -  row:12 cell:9 - 
+$K$13 -  row:12 cell:10 - 
+$A$14 -  row:13 cell:0 - 4.0
+$B$14 -  row:13 cell:1 - 
+$C$14 -  row:13 cell:2 - 
+$D$14 -  row:13 cell:3 - 
+$E$14 -  row:13 cell:4 - 
+$F$14 -  row:13 cell:5 - 
+$G$14 -  row:13 cell:6 - 
+$H$14 -  row:13 cell:7 - 
+$I$14 -  row:13 cell:8 - 
+$J$14 -  row:13 cell:9 - 
+$K$14 -  row:13 cell:10 - 
+$A$15 -  row:14 cell:0 - 5.0
+$B$15 -  row:14 cell:1 - 
+$C$15 -  row:14 cell:2 - 
+$D$15 -  row:14 cell:3 - 
+$E$15 -  row:14 cell:4 - 
+$F$15 -  row:14 cell:5 - 
+$G$15 -  row:14 cell:6 - 
+$H$15 -  row:14 cell:7 - 
+$I$15 -  row:14 cell:8 - 
+$J$15 -  row:14 cell:9 - 
+$K$15 -  row:14 cell:10 - 
+$A$16 -  row:15 cell:0 - 6.0
+$B$16 -  row:15 cell:1 - 
+$C$16 -  row:15 cell:2 - 
+$D$16 -  row:15 cell:3 - 
+$E$16 -  row:15 cell:4 - 
+$F$16 -  row:15 cell:5 - 
+$G$16 -  row:15 cell:6 - 
+$H$16 -  row:15 cell:7 - 
+$I$16 -  row:15 cell:8 - 
+$J$16 -  row:15 cell:9 - 
+$K$16 -  row:15 cell:10 - 
+$A$17 -  row:16 cell:0 - 7.0
+$B$17 -  row:16 cell:1 - 
+$C$17 -  row:16 cell:2 - 
+$D$17 -  row:16 cell:3 - 
+$E$17 -  row:16 cell:4 - 
+$F$17 -  row:16 cell:5 - 
+$G$17 -  row:16 cell:6 - 
+$H$17 -  row:16 cell:7 - 
+$I$17 -  row:16 cell:8 - 
+$J$17 -  row:16 cell:9 - 
+$K$17 -  row:16 cell:10 - 
+$A$18 -  row:17 cell:0 - 8.0
+$B$18 -  row:17 cell:1 - 
+$C$18 -  row:17 cell:2 - 
+$D$18 -  row:17 cell:3 - 
+$E$18 -  row:17 cell:4 - 
+$F$18 -  row:17 cell:5 - 
+$G$18 -  row:17 cell:6 - 
+$H$18 -  row:17 cell:7 - 
+$I$18 -  row:17 cell:8 - 
+$J$18 -  row:17 cell:9 - 
+$K$18 -  row:17 cell:10 - 
+$A$19 -  row:18 cell:0 - 9.0
+$B$19 -  row:18 cell:1 - 
+$C$19 -  row:18 cell:2 - 
+$D$19 -  row:18 cell:3 - 
+$E$19 -  row:18 cell:4 - 
+$F$19 -  row:18 cell:5 - 
+$G$19 -  row:18 cell:6 - 
+$H$19 -  row:18 cell:7 - 
+$I$19 -  row:18 cell:8 - 
+$J$19 -  row:18 cell:9 - 
+$K$19 -  row:18 cell:10 - 
+$A$20 -  row:19 cell:0 - 10.0
+$B$20 -  row:19 cell:1 - 
+$C$20 -  row:19 cell:2 - 
+$D$20 -  row:19 cell:3 - 
+$E$20 -  row:19 cell:4 - 
+$F$20 -  row:19 cell:5 - 
+$G$20 -  row:19 cell:6 - 
+$H$20 -  row:19 cell:7 - 
+$I$20 -  row:19 cell:8 - 
+$J$20 -  row:19 cell:9 - 
+$K$20 -  row:19 cell:10 - 
+$A$21 -  row:20 cell:0 - 11.0
+$B$21 -  row:20 cell:1 - 
+$C$21 -  row:20 cell:2 - 
+$D$21 -  row:20 cell:3 - 
+$E$21 -  row:20 cell:4 - 
+$F$21 -  row:20 cell:5 - 
+$G$21 -  row:20 cell:6 - 
+$H$21 -  row:20 cell:7 - 
+$I$21 -  row:20 cell:8 - 
+$J$21 -  row:20 cell:9 - 
+$K$21 -  row:20 cell:10 - 
+$A$22 -  row:21 cell:0 - 12.0
+$B$22 -  row:21 cell:1 - 
+$C$22 -  row:21 cell:2 - 
+$D$22 -  row:21 cell:3 - 
+$E$22 -  row:21 cell:4 - 
+$F$22 -  row:21 cell:5 - 
+$G$22 -  row:21 cell:6 - 
+$H$22 -  row:21 cell:7 - 
+$I$22 -  row:21 cell:8 - 
+$J$22 -  row:21 cell:9 - 
+$K$22 -  row:21 cell:10 - 
+$A$23 -  row:22 cell:0 - 13.0
+$B$23 -  row:22 cell:1 - 
+$C$23 -  row:22 cell:2 - 
+$D$23 -  row:22 cell:3 - 
+$E$23 -  row:22 cell:4 - 
+$F$23 -  row:22 cell:5 - 
+$G$23 -  row:22 cell:6 - 
+$H$23 -  row:22 cell:7 - 
+$I$23 -  row:22 cell:8 - 
+$J$23 -  row:22 cell:9 - 
+$K$23 -  row:22 cell:10 - 
+$A$24 -  row:23 cell:0 - 14.0
+$B$24 -  row:23 cell:1 - 
+$C$24 -  row:23 cell:2 - 
+$D$24 -  row:23 cell:3 - 
+$E$24 -  row:23 cell:4 - 
+$F$24 -  row:23 cell:5 - 
+$G$24 -  row:23 cell:6 - 
+$H$24 -  row:23 cell:7 - 
+$I$24 -  row:23 cell:8 - 
+$J$24 -  row:23 cell:9 - 
+$K$24 -  row:23 cell:10 - 
+$A$25 -  row:24 cell:0 - 15.0
+$B$25 -  row:24 cell:1 - 
+$C$25 -  row:24 cell:2 - 
+$D$25 -  row:24 cell:3 - 
+$E$25 -  row:24 cell:4 - 
+$F$25 -  row:24 cell:5 - 
+$G$25 -  row:24 cell:6 - 
+$H$25 -  row:24 cell:7 - 
+$I$25 -  row:24 cell:8 - 
+$J$25 -  row:24 cell:9 - 
+$K$25 -  row:24 cell:10 - 
+$A$26 -  row:25 cell:0 - 16.0
+$B$26 -  row:25 cell:1 - 
+$C$26 -  row:25 cell:2 - 
+$D$26 -  row:25 cell:3 - 
+$E$26 -  row:25 cell:4 - 
+$F$26 -  row:25 cell:5 - 
+$G$26 -  row:25 cell:6 - 
+$H$26 -  row:25 cell:7 - 
+$I$26 -  row:25 cell:8 - 
+$J$26 -  row:25 cell:9 - 
+$K$26 -  row:25 cell:10 - 
+$A$27 -  row:26 cell:0 - 17.0
+$B$27 -  row:26 cell:1 - 
+$C$27 -  row:26 cell:2 - 
+$D$27 -  row:26 cell:3 - 
+$E$27 -  row:26 cell:4 - 
+$F$27 -  row:26 cell:5 - 
+$G$27 -  row:26 cell:6 - 
+$H$27 -  row:26 cell:7 - 
+$I$27 -  row:26 cell:8 - 
+$J$27 -  row:26 cell:9 - 
+$K$27 -  row:26 cell:10 - 
+$A$29 -  row:28 cell:0 - 생성 인덱스
+$B$29 -  row:28 cell:1 - 
+$C$29 -  row:28 cell:2 - 
+$D$29 -  row:28 cell:3 - 
+$E$29 -  row:28 cell:4 - 
+$F$29 -  row:28 cell:5 - 
+$G$29 -  row:28 cell:6 - 
+$H$29 -  row:28 cell:7 - 
+$I$29 -  row:28 cell:8 - 
+$J$29 -  row:28 cell:9 - 
+$K$29 -  row:28 cell:10 - 
