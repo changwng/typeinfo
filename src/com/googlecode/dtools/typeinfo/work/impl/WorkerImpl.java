@@ -5,12 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFHyperlink;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.ArrayUtil;
 
 import com.googlecode.dtools.typeinfo.beans.DmType;
-import com.googlecode.dtools.typeinfo.beans.DmTypeAttr;
 import com.googlecode.dtools.typeinfo.dao.DmTypeDAO;
+import com.googlecode.dtools.typeinfo.util.ExcelUtil;
 import com.googlecode.dtools.typeinfo.work.FilesWorker;
 import com.googlecode.dtools.typeinfo.work.ListWorker;
 import com.googlecode.dtools.typeinfo.work.TransformBean;
@@ -83,57 +88,38 @@ public class WorkerImpl implements Worker, createExcelWorkbook{
         System.out.println("Saved DQL " + dmType.getName() + ".dql"); 
         
         filesWorker.saveExcelTableInfo(dmType, wb, dqlString); 
-        System.out.println("Saved Excel " + dmType.getName() + ".dql"); 
+        System.out.println("Saved Excel " + dmType.getName() + ".xls"); 
+        
+     
         //Create domain for dql create type
         //DQL 생성
       //  processDqlCreate(dmType);
         return dmType;
     }
 
-	private void processDqlCreate(DmType dmType) {
-		System.out.println("Create DQL " + dmType.getName() + ".dql");
-        int startPos = dmType.getStartPos();
-        int attrCount = dmType.getAttrCount();
-        String dqlfile =  dmType.getName() + ".dql";
-    //	System.out.println("Create DQL " + dmType.getSuperName() + ":"+dmType.getStartPos());
-    	StringBuilder sb = new StringBuilder();
-    	sb.append("CREATE TYPE  "+dmType.getName()+" ( \r\n");
-    	for (DmTypeAttr a : dmType.getAttributeList().getAttribute()){
-    		 if (a.getPos() > startPos) { 
-	        	//System.out.println(" " + a.getName() + " :"+ a.getPos() );
-	            //System.out.println(" " + a.getName() + " :"+ a.getType() + " :"+ a.getLabel()+ " :"+ a.isRepeating());
-    			if (a.isRepeating()){
-    				sb.append("\t "+a.getName()+"      "+a.getType()+"      REPEATING " );
-    			}else{
-    				sb.append("\t "+a.getName()+"      "+a.getType() +"");
-    			}
-	    			if(attrCount !=  a.getPos()){
-	    				sb.append(", \r\n");
-	    			}else {
-	    				sb.append(" \r\n");
-	    			}
-    			}
-        } 
-    	if("".equals(dmType.getSuperName())){
-    		sb.append(") WITH SUPERTYPE NULL PUBLISH;  \r\n ");
-    	}else{
-    		sb.append(") WITH SUPERTYPE "+dmType.getSuperName()+" PUBLISH;  \r\n ");
-    	}
-    	System.out.println(sb.toString());
-    	//FileUtils.writeStringToFile(file, sb.toString(), "UTF-8");
-    	 
-	}
+	
 	// Excel 템플릿 작업 진행
     public void processList(List<String> list) {
     	 System.out.println("processList  start===");
     	 outputPathCheck();
     	// 
     	 HSSFWorkbook wb= createExcelWorkBook(); 
+    	 String sheetName ="";
+    	 DmType dmType = null;
+    	 int nRowStart=2;
+    	 int i =0;
         for (String s: list){
          //   if (typeListFromDocbase && !s.startsWith("dm"))    //todo exclude list
         	/*if(s.startsWith("dm_sysobject") )
         	{*/
-	            processSingle(s , wb);
+        		dmType =  processSingle(s , wb);
+	            
+	         // Type List link document Start
+        		nRowStart ++;
+        		i++;
+        		setTypeListSheet(wb, dmType, nRowStart, i, s);
+	            // Type List link document End
+	            
 	            closeWorkbook(wb);
         	//}
            // break;
@@ -141,6 +127,50 @@ public class WorkerImpl implements Worker, createExcelWorkbook{
         System.out.println("processList  end===");
         //closeWorkbook(wb);
     }
+ // Type List link document
+	private void setTypeListSheet(HSSFWorkbook wb, DmType dmType,
+			int nRowStart, int i, String s) {
+		String sheetName;
+		sheetName = s;
+		HSSFSheet typeSheet =    wb.getSheet("TYPELIST"); //(wb.getSheetIndex("TYPELIST"));
+		Row row  		    = typeSheet.getRow(nRowStart);
+		if(null == row ){
+			row = typeSheet.createRow((short)nRowStart);
+			row.createCell(0).setCellValue("");
+			row.createCell(1).setCellValue("");
+			row.createCell(2).setCellValue("");
+			row.createCell(3).setCellValue("");
+			row.createCell(4).setCellValue("");
+		}
+		ExcelUtil.setCellValue(typeSheet, nRowStart,0,String.valueOf(i));
+		Cell cell= ExcelUtil.setCellValue(typeSheet, nRowStart,2,sheetName);
+		HSSFHyperlink paramHyperlink = new HSSFHyperlink(HSSFHyperlink.LINK_DOCUMENT);
+		paramHyperlink.setAddress("'"+sheetName+"'!A1");
+		cell.setHyperlink(paramHyperlink);
+		
+		ExcelUtil.setCellValue(typeSheet, nRowStart,1,dmType.getSuperName());
+		//System.out.println("dmType.getNote():"+dmType.getNote());
+		ExcelUtil.setCellValue(typeSheet, nRowStart,3,dmType.getNote());
+		if( null != dmType.getSubTypeList()){
+			ExcelUtil.setCellValue(typeSheet, nRowStart,4,this.getStringByList((List<String>)dmType.getSubTypeList().getSubType()) , true);
+		}
+	}
+	private String getStringByList(List<String> list)
+	{
+		String retVal="";
+		int nSize = list.size();
+		int i=0;
+		for (String subType : list ){
+			i++;
+			if (i < nSize){
+				retVal += subType+"\n";
+			}else{
+				retVal += subType;
+			}
+				
+		}
+		return retVal; 
+	}
     private void closeWorkbook(HSSFWorkbook wb)  {
     	try {
     		

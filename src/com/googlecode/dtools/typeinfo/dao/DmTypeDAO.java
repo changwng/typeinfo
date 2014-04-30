@@ -33,7 +33,7 @@ public interface DmTypeDAO {
 
     Map<String, String> getTypeTagMap(List<String> typesList) throws DfException;
 
-
+    List<Map<String, String>> getTypeTagList(List<String> typesList) throws DfException;
     List<String> getTypeNameList();
 
     boolean testConnection();

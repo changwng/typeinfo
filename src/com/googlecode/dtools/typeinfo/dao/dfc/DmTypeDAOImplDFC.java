@@ -115,8 +115,23 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
             DmType.SubTypeList subTypeList = new DmType.SubTypeList();
             subTypeList.getSubType().addAll(list);
             dmType.setSubTypeList(subTypeList);
-
-
+            
+         // direct subtypes
+            // "' and nls_key = '" + labelNlsKey + "'" +
+            String dql ="SELECT nls_key, label_text from dmi_dd_type_info where type_name='" + typeName + "'";
+            dql +=" and nls_key = '" + labelNlsKey + "'";
+           // q.setDQL("SELECT nls_key, lable_text from dmi_dd_type_info where type_name='" + typeName + "'");
+            q.setDQL(dql);
+            col = q.execute(session, DfQuery.DF_READ_QUERY);
+            String type_label=typeName;
+            while (col.next()) {
+            	type_label = col.getString("label_text");
+            }
+            if(col !=null)
+            {col.close();}
+            //System.out.println("type_label:"+type_label);
+            dmType.setNote(type_label);
+            
         } catch (DfException e) {
             e.printStackTrace();
         }
@@ -130,7 +145,7 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
         if (dmType == null || dmType.getName() == null)
             return;
 
-        dmType.setNote("");
+       // dmType.setNote("");
 
         try {
             if (session == null)
@@ -388,7 +403,8 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
 
 
         for (String typeName : typesList) {
-
+        		
+        	if(typeName.startsWith("dmi_0")) { continue;};
             String dql = "select distinct substr(r_object_id,0,2) as tag_ from " + typeName;
             IDfQuery q = new DfQuery();
             q.setDQL(dql);
@@ -396,9 +412,11 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
             if (col.next()) {
                 tag = col.getString("tag_");
             }
-            while (col.next()) {
+            if( col !=null){col.close();}
+           /* 두개이상의 테그가 있으면 에러 발생
+            * while (col.next()) {
                 System.err.println("more then 2 tag of object type!" + typeName);
-            }
+            }*/
             //  if (!tag.equals("00"))
             map.put(typeName, tag);
 
@@ -409,7 +427,7 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
     public List<String> getTypeNameList() {
         List<String> list = new ArrayList<String>();
         IDfQuery q = new DfQuery();
-        q.setDQL("select name from dm_type");
+        q.setDQL("select name from dm_type order by name asc");
         if (session == null)
             session = getSession();
         try {
@@ -451,16 +469,22 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
         
         
         IDfQuery q = new DfQuery();
-        IDfCollection col;
+        IDfCollection col=null;
         if (collectCountInfo) {
+        	try{
             q.setDQL("SELECT count(distinct " + attr.getName() + ") as cnt from " + typeName);
             col = q.execute(session, DfQuery.DF_READ_QUERY);
             while (col.next()) {
                 attr.setDistinctCount(col.getLong("cnt"));
 
             }
-            if(col !=null)
-            {col.close();}
+        	}catch(Exception ex){
+        		attr.setDistinctCount(1L);
+        	}
+        	finally{
+	            if(col !=null)
+	            {col.close();}
+        	}
         }
        
         // PossValuesList
@@ -614,5 +638,33 @@ public class DmTypeDAOImplDFC implements DmTypeDAO {
     }
 
 	
+    public List<Map<String, String>> getTypeTagList(List<String> typesList) throws DfException {
+        if (session == null)
+            session = getSession();
+        String tag = null;
 
+        Map<String, String> map = new HashMap<String, String>();
+        List<Map<String, String>> lst = new ArrayList<Map<String, String>>();
+
+        for (String typeName : typesList) {
+        	map = new HashMap<String, String>();
+        	if(typeName.startsWith("dmi_0")) { continue;};
+            String dql = "select distinct substr(r_object_id,0,2) as tag_ from " + typeName;
+            IDfQuery q = new DfQuery();
+            q.setDQL(dql);
+            IDfCollection col = q.execute(session, DfQuery.DF_READ_QUERY);
+            if (col.next()) {
+                tag = col.getString("tag_");
+            }
+            if( col !=null){col.close();}
+           /* 두개이상의 테그가 있으면 에러 발생
+            * while (col.next()) {
+                System.err.println("more then 2 tag of object type!" + typeName);
+            }*/
+            //  if (!tag.equals("00"))
+            map.put(typeName, tag);
+            lst.add(map);
+        }
+        return lst;
+    }
 }

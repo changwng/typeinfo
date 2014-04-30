@@ -1,10 +1,13 @@
 package com.googlecode.dtools.typeinfo;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.googlecode.dtools.typeinfo.dao.DmTypeDAO;
 import com.googlecode.dtools.typeinfo.util.SpringUtil;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,6 +21,24 @@ public class Test {
         DmTypeDAO dao = (DmTypeDAO) SpringUtil.getSpringBean("dmTypeDAO");
         List<String> list = dao.getTypeNameList();
         System.out.println("list.size() = " + list.size());
+        
+        //Map<String, String> selects = dao.getTypeTagMap(list);
+        //HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+        List<Map<String, String>> tagList =dao.getTypeTagList(list);
+        System.out.println("Type Tag List========================");
+        for( Map<String,String> m : tagList){
+        	//HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+	        for(Entry<String, String> entry : m.entrySet()) {
+	            String key = entry.getKey();
+	            String value = entry.getValue();
+	            System.out.println(""+key+"\t\t\t\t:"+value);
+	             
+	            // do what you have to do here
+	            // In your case, an other loop.
+	        }
+        }
+        
+        
 //        TransformBean magicUtil = (TransformBean) SpringUtil.getSpringBean("magicUtil");
 //    //   List l = dao.getRelationTypesNamesList();
 //    //   System.out.println("l.size() = " + l.size());

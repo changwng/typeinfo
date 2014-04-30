@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.CellReference;
@@ -14,7 +15,9 @@ import org.apache.poi.hssf.util.Region;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
+
 public class ExcelUtil {
+	 public static HSSFCellStyle cs = null;
 	 public static void copySheets(HSSFSheet newSheet, HSSFSheet sheet){  
 	        copySheets(newSheet, sheet, true);  
 	    }  
@@ -116,13 +119,48 @@ public class ExcelUtil {
 	    private static boolean isNewMergedRegion(Region region, Collection mergedRegions) {  
 	        return !mergedRegions.contains(region);  
 	    }  
+	    public static Cell setCellValue(HSSFSheet sheet, int nRow, int nCol, String value, boolean bWordWrap)
+	    {
+	    	 /* HSSFCellStyle cs = sheet.getWorkbook().createCellStyle();
+	    	  HSSFFont f2 = sheet.getWorkbook().createFont();
+	  		  cs = sheet.getWorkbook().createCellStyle();
+	  		  cs.setFont(f2);
+		  		// Word Wrap MUST be turned on
+		  	  cs.setWrapText(true);*/
+	    	 getCellStyle(sheet); // static으로 된 cell style 호출
+	    	//
+	    	  Row row   = sheet.getRow(nRow);
+	    	  if( row ==null) return null;
+	          Cell cell1 = row.getCell(nCol);
+	          cell1.setCellType(HSSFCell.CELL_TYPE_STRING);
+	          cell1.setCellValue(value);
+	          //cell1.setCellValue("Use \n with word wrap on to create a new line\n 한글처리");
+	          cell1.setCellStyle(cs);
+				
+	          return cell1;
+	    }
 	    
-	    public static void setCellValue(HSSFSheet sheet, int nRow, int nCol, String value)
+	    public static HSSFCellStyle getCellStyle(HSSFSheet sheet){
+	    	  if(cs ==null)
+	    	  {
+	    		  System.out.println("HSSFCellStyle ===================:CS");
+	    		  cs = sheet.getWorkbook().createCellStyle();
+		    	  HSSFFont f2 = sheet.getWorkbook().createFont();
+		  		  cs = sheet.getWorkbook().createCellStyle();
+		  		  cs.setFont(f2);
+			  		// Word Wrap MUST be turned on
+			  	  cs.setWrapText(true);
+	    	  }
+	    	return cs;
+	    }
+	    
+	    public static Cell setCellValue(HSSFSheet sheet, int nRow, int nCol, String value)
 	    {
 	    	  Row row   = sheet.getRow(nRow);
-	    	  if( row ==null) return;
+	    	  if( row ==null) return null;
 	          Cell cell1 = row.getCell(nCol);
 	          cell1.setCellValue(value);
+	          return cell1;
 	    }
 	    public static void displaySheet(HSSFSheet sheet)
 	    {

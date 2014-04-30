@@ -13,9 +13,12 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFHyperlink;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 
+import com.documentum.fc.impl.util.StringUtil;
 import com.googlecode.dtools.typeinfo.beans.DmType;
 import com.googlecode.dtools.typeinfo.beans.DmTypeAttr;
 import com.googlecode.dtools.typeinfo.beans.ObjectFactory;
@@ -178,7 +181,9 @@ public class FilesWorkerImpl implements FilesWorker {
         int attrCount = dmType.getAttrCount();
         int nTypeAttrCount = (attrCount-startPos)+1;
         
-        String dqlfile = outputPath + dmType.getName() + ".dql";
+        dqlString = dqlString.replaceAll("\r\n", "\n");
+        
+       // String dqlfile = outputPath + dmType.getName() + ".dql";
     //	System.out.println("Create DQL " + dmType.getSuperName() + ":"+dmType.getStartPos());
     	//StringBuilder sb = new StringBuilder();
     	String superType = dmType.getSuperName();
@@ -186,7 +191,6 @@ public class FilesWorkerImpl implements FilesWorker {
     	superType = superType.replaceAll(" ", "");
     	String labelText ="";
     	String customtype=dmType.getName();
-    	 
     	 String sheetName = customtype;
          HSSFSheet codeSheetClone  = null;
          String clone_name ="COPYCODE_20";
@@ -209,22 +213,29 @@ public class FilesWorkerImpl implements FilesWorker {
           
          wb.setSheetName(wb.getSheetIndex(codeSheetClone),sheetName);
          String svalue =sheetName;
-         ExcelUtil.setCellValue(codeSheetClone, 5,2,svalue);
-    	//
+         ExcelUtil.setCellValue(codeSheetClone, 5,2,svalue); //타입명
+         ExcelUtil.setCellValue(codeSheetClone, 5,7,superType); //타입명
+         ExcelUtil.setCellValue(codeSheetClone, 7,2,dmType.getNote()); // 타입설명
+         if( null != dmType.getSubTypeList()){
+ 			ExcelUtil.setCellValue(codeSheetClone, 6,2,this.getStringByList((List<String>)dmType.getSubTypeList().getSubType()) , true);
+ 		}
          int nStartRow =9;
     	//sb.append("CREATE TYPE  "+dmType.getName()+" ( \r\n");
     	for (DmTypeAttr a : dmType.getAttributeList().getAttribute()){
     		 if (a.getPos() > startPos) { 
     			 nStartRow ++;
 	        	 //System.out.println(" " + a.getName() + " :"+ a.getPos() + " :"+ nStartRow);
-	             System.out.println(" " + a.getName() + " :"+ a.getType() + " :"+ a.getLabel()+ " :"+ a.isRepeating());
+	           //  System.out.println(" " + a.getName() + " :"+ a.getType() + " :"+ a.getLabel()+ " :"+ a.isRepeating());
     			 //if(this.isLabeldisplay()){
 	    			// labelText =" ( SET label_text='"+a.getLabel()+"', SET category_name='cate_"+customtype+"') ";
-	    			 if("".equals(a.getLabel())){
-	    				 labelText ="";
+	    			 if("".equals(StringUtil.nullToEmpty(a.getLabel()).replaceAll(" ", ""))){
+	    				 labelText= a.getName(); 
+	    			 }else{
+	    				 labelText= a.getLabel();
 	    			 }
+	    			// System.out.println(" " + a.getName() + " :"+ a.getPos() + " :"+ labelText); 
     			 //}
-	    			 ExcelUtil.setCellValue(codeSheetClone, nStartRow,1, a.getLabel());
+	    			 ExcelUtil.setCellValue(codeSheetClone, nStartRow,1, labelText);
 	    			 ExcelUtil.setCellValue(codeSheetClone, nStartRow,3, a.getName());
 	    			 ExcelUtil.setCellValue(codeSheetClone, nStartRow,4, a.getType());
     			if (a.isRepeating()){
@@ -236,17 +247,33 @@ public class FilesWorkerImpl implements FilesWorker {
 	    			 
     			}
         } 
-    	if (!"".equals(superType)){
+    	/*if (!"".equals(superType)){
     		ExcelUtil.setCellValue(codeSheetClone, 7,2,superType);
     		//	sb.append(") WITH SUPERTYPE "+superType+" PUBLISH;  \r\n ");
     	}else{
     		ExcelUtil.setCellValue(codeSheetClone, 7,2,"NULL");
     		//  sb.append(") WITH SUPERTYPE  NULL; \r\n ");
-    	}
+    	}*/
     	// save Dql String
-    	ExcelUtil.setCellValue(codeSheetClone, nMaxRow,2,dqlString);
+    	ExcelUtil.setCellValue(codeSheetClone, nMaxRow,2,dqlString,true);
     	
     }
+    private String getStringByList(List<String> list)
+	{
+		String retVal="";
+		int nSize = list.size();
+		int i=0;
+		for (String subType : list ){
+			i++;
+			if (i < nSize){
+				retVal += subType+"\n";
+			}else{
+				retVal += subType;
+			}
+				
+		}
+		return retVal; 
+	}
     public void serialize(List<DmType> dmTypeList) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
