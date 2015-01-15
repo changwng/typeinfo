@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="dmTypeDAO" class="com.googlecode.dtools.typeinfo.dao.dfc.DmTypeDAOImplDFC">
+        <property name="docbase" value="dmadmin"/>
+        <property name="userName" value="dmadmin"/>
+        <property name="userPassword" value="dmadmin"/>
+        <property name="possibleValuesCount" value="4"/>
+        <!--<property name="collectCountInfo" value="false"/>-->
+        <property name="collectCountInfo" value="false"/>
+       <!--  <property name="labelNlsKey" value="en"/> -->
+       <property name="labelNlsKey" value="ko"/> 
+    </bean> 
+    <bean id="worker" class="com.googlecode.dtools.typeinfo.work.impl.WorkerImpl">
+        <property name="dmTypeDAO" ref="dmTypeDAO"/> 
+        <property name="filesWorker" ref="filesWorker"/>
+        <property name="listWorker" ref="listWorker"/>
+        <property name="transformBean" ref="transformBean"/>
+       <property name="exceltemplate" value="D:\\eclipse43\\springsource\\workspace\\typeinfo\\xls\\type_template.xls"/>
+        
+    </bean>
+
+
+    <bean id="filesWorker" class="com.googlecode.dtools.typeinfo.work.impl.FilesWorkerImpl">
+        <property name="fileWithTypeNames"
+                  value="d:\\temp\\HomeGrownUtils\\dctm_type_info\\src\\typesList.txt"/> 
+        <property name="outputPath" value="d:\\temp\\typeinfo\\"/>
+        <property name="labeldisplay" value="true"/>
+
+    </bean>
+
+    <bean id="listWorker" class="com.googlecode.dtools.typeinfo.work.impl.ListWorkerImpl">
+        <property name="listFromDocbase" value="true"/>
+        <property name="excludePrefix" value="dm_"/>
+        <property name="dao" ref="dmTypeDAO"/>
+        
+    </bean>
+
+    <bean id="transformBean" class="com.googlecode.dtools.typeinfo.work.TransformBean">
+        <property name="mapCodes" ref="typeCodes"/>
+        <property name="cleanRedundant" value="true"/>
+        <property name="fillDateOfCollectInfo" value="false"/>
+    </bean>
+
+	<!-- for xml Type String -->
+	<!-- 
+    <util:map id="typeCodes">
+        <entry key="0" value="boolean"/>
+        <entry key="1" value="integer"/>
+        <entry key="2" value="string"/>
+        <entry key="3" value="ID"/>
+        <entry key="4" value="DATE"/>
+        <entry key="5" value="Double"/>
+    </util:map>
+     -->
+     <!--  for create dql String-->
+     <util:map id="typeCodes">
+        <entry key="0" value="BOOL"/>
+        <entry key="1" value="Integer"/>
+        <entry key="2" value="CHAR"/>
+        <entry key="3" value="ID"/>
+        <entry key="4" value="TIME"/>
+        <entry key="5" value="Double"/>
+    </util:map>
+    <util:list id="typesList">
+   <!--  <value>dm_sysobject</value> -->
+    <value>di_recycle_bin_relation</value>
+    <value>dmr_content</value>
+    </util:list>
+ <!-- 
+    <util:list id="typesList">
+        <value>kc_domain_dictionary</value>
+        <value>kc_email_item</value>
+        <value>kc_filenomenclature</value>
+        <value>kc_filenomenclature_node</value>
+        <value>kc_finance</value>
+        <value>kc_folder</value>
+        <value>kc_grant_request</value>
+        <value>kc_grant_request_auto</value>
+        <value>kc_group</value>
+        <value>kc_group_contract</value>
+        <value>kc_holiday</value>
+        <value>kc_incoming_doc</value>
+        <value>kc_inform_doc</value>
+        <value>kc_inform_doc_with_agree_gd</value>
+        <value>kc_inform_doc_without_appr</value>
+        <value>kc_inform_doc_without_sign</value>
+        <value>kc_inform_without_sign</value>
+        <value>kc_instr_manage_org_doc</value>
+        <value>kc_internal_agree_task</value>
+        <value>kc_internal_doc</value>
+        <value>kc_invalid_operation</value>
+        <value>kc_invest_plan_dictionary</value>
+        <value>kc_investment_plan</value>
+        <value>kc_juristic_person</value>
+        <value>kc_kategory</value>
+        <value>kc_kind_description</value>
+        <value>kc_mail_server</value>
+        <value>kc_mission</value>
+        <value>kc_mission_calc</value>
+        <value>kc_mission_calc2</value>
+        <value>kc_mission_inwork</value>
+        <value>kc_mission_project</value>
+        <value>kc_need_reserve</value>
+        <value>kc_ord_config</value>
+        <value>kc_order_doc</value>
+        <value>kc_order_missionproject_doc</value>
+        <value>kc_order_of_day</value>
+        <value>kc_org_doc</value>
+        <value>kc_org_position</value>
+        <value>kc_org_str_dictionary</value>
+        <value>kc_orgstructure_linked_item</value>
+        <value>kc_outgoing_doc</value>
+        <value>kc_payment</value>
+        <value>kc_performers_redirection</value>
+        <value>kc_person_dictionary</value>
+        <value>kc_physical_person_doc</value>
+        <value>kc_position</value>
+        <value>kc_position_dictionary</value>
+        <value>kc_project_registrator</value>
+        <value>kc_projects_mission_doc</value>
+        <value>kc_region_dictionary</value>
+        <value>kc_registrator</value>
+        <value>kc_relation</value>
+        <value>kc_relation_obj</value>
+        <value>kc_relation_type_dic</value>
+        <value>kc_relation_type_link</value>
+        <value>kc_report</value>
+        <value>kc_report_int</value>
+        <value>kc_reserve</value>
+        <value>kc_saved_report</value>
+        <value>kc_scheme_reminders</value>
+        <value>kc_security_profile</value>
+        <value>kc_signature</value>
+        <value>kc_smart_list</value>
+        <value>kc_stamp_dictionary</value>
+        <value>kc_state_extension_row</value>
+        <value>kc_states</value>
+        <value>kc_status_question</value>
+        <value>kc_substituter</value>
+        <value>kc_sysobject</value>
+        <value>kc_transfer_agree_date</value>
+        <value>kc_transfer_control_date</value>
+        <value>kc_type_description</value>
+        <value>kc_type_equipment</value>
+        <value>kc_user</value>
+        <value>kc_user_certificate</value>
+        <value>kc_user_profile</value>
+        <value>kc_visa</value>
+        <value>kc_visa_executing</value>
+        <value>kc_visa_internal_agree</value>
+        <value>kc_visa_old</value>
+        <value>kc_without_reg_doc</value>
+    </util:list>
+ -->
+
+
+
+
+
+</beans>
